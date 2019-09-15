@@ -79,3 +79,6 @@ Change state of a Plejd device in the mesh by using **msg.payload**:
 
 {id: 13, state: 'on', dim: 100}
 ```
+
+## Thanks
+Big thanks to [@klali](https://github.com/klali) and his https://github.com/klali/ha-plejd component for Home assistant, this project would not have been possible without it.
