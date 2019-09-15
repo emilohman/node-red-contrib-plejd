@@ -65,14 +65,14 @@ All nodes needs to be configured with a Plejd connection. The only setting for t
 
 ### Input Node
 
-Return state changes of Plejd devices in *msg.payload*. Example input:
+Return state changes of Plejd devices in **msg.payload**. Example input:
 ```
 {id: 11, state: 'on', dim: 255}
 ```
 
 ### Output node
 
-Change state of a Plejd device in the mesh,
+Change state of a Plejd device in the mesh by using **msg.payload**:
 
 ```
 {id: 12, state: 'off', dim: 255}
