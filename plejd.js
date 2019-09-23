@@ -9,8 +9,6 @@ module.exports = function(RED) {
   var AUTH_UUID = "31ba000960854726be45040c957391b5"
   var PING_UUID = "31ba000a60854726be45040c957391b5"
 
-  var CRYPTO_KEY = null;
-
   function PlejdConnectionNode(n) {
     RED.nodes.createNode(this, n);
 
@@ -19,7 +17,7 @@ module.exports = function(RED) {
     node.cryptoKey = n.cryptoKey;
 
     if (node.cryptoKey) {
-      CRYPTO_KEY = Buffer.from(node.cryptoKey, 'hex');
+      node.cryptoKey = Buffer.from(node.cryptoKey.replace(/-/g, ''), 'hex');
     } else {
       node.error('No cryptokey found!');
       return;
@@ -147,7 +145,7 @@ module.exports = function(RED) {
         }
 
         node.lastDataCharacteristic.on('data', function(data, isNotification) {
-          var dec = plejdEncDec(CRYPTO_KEY, node.address, data);
+          var dec = plejdEncDec(node.cryptoKey, node.address, data);
 
           var dim = 0xffff;
           var state = null;
@@ -365,12 +363,12 @@ module.exports = function(RED) {
         payload = Buffer.from((id).toString(16).padStart(2, '0') + '0110009801' + (brightness).toString(16).padStart(4, '0'), 'hex');
       }
 
-      node.plejdWrite(node.dataCharacteristic, plejdEncDec(CRYPTO_KEY, node.address, payload))
+      node.plejdWrite(node.dataCharacteristic, plejdEncDec(node.cryptoKey, node.address, payload))
     }
 
     this.turnOff = function(id) {
       var payload = Buffer.from((id).toString(16).padStart(2, '0') + '0110009700', 'hex');
-      node.plejdWrite(node.dataCharacteristic, plejdEncDec(CRYPTO_KEY, node.address, payload))
+      node.plejdWrite(node.dataCharacteristic, plejdEncDec(node.cryptoKey, node.address, payload))
     }
 
     this.authenticate = function(callback) {
@@ -385,7 +383,7 @@ module.exports = function(RED) {
               return;
             }
 
-            resp = plejdChalresp(CRYPTO_KEY, data);
+            resp = plejdChalresp(node.cryptoKey, data);
 
             node.authCharacteristic.write(resp, false, function(err) {
               if (err) {
