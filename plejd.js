@@ -424,7 +424,7 @@ module.exports = function(RED) {
             state = msg.payload.state || 'On',
             dim = msg.payload.dim || 255;
 
-        node.plejdConnection.setState(id, state);
+        node.plejdConnection.setState(id, state, dim);
 
       });
     });
