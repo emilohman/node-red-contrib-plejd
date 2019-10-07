@@ -3,6 +3,17 @@ node-red-contrib-plejd
 
 A set of Node-RED nodes for interacting with Plejd.
 
+
+## Q&amp;A
+
+> **Q1**  Why can’t Node-RED connect to Plejd?
+
+* _Check if the Plejd mesh is not connected to another bluetooth device. The  `Plejd`  app for example_
+
+> **Q2**  Why can I not use the Plejd app when node-red-contrib-plejd is running?
+
+* _It’s because only one device can be connected to the BLE mesh at the time._
+
 ## Install
 
 Run the following command in the user directory of your Node-RED install. This is
